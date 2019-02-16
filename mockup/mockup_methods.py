@@ -56,13 +56,13 @@ def pedestrian_detector(image):
     detected_pedestrian = [bbox1, bbox2]
     return detected_pedestrian
 
-def pedestrian_tracking(detected_pedestrian_previous, detected_pedestrian):
+def pedestrian_tracking(detected_pedestrian_previous, detected_pedestrians):
     # Check the similarity between the detection in the previous frame "detected_pedestrian_previous" and the new frame
     # "detected_pedestrian" and returns a list with the detected_pedestrians and their Ids.
     # If a new pedestrian is detected a new available Id is given to that pedestrian.
     # Updates the position of the "previous_bbox" of the pedestrian
     bbox = Bbox(0, 0, 10, 10)
-    tracked_pedestrians = [Pedestrian(id=i, bbox=bbox) for i in range(0, 6)]
+    tracked_pedestrians = [Pedestrian(_id=i, bbox=bbox) for i in range(0, 6)]
     return tracked_pedestrians
 
 def hasEnterTheShop(tracked_pedestrians):
@@ -71,6 +71,5 @@ def hasEnterTheShop(tracked_pedestrians):
     for pedestrian in tracked_pedestrians:
         # Check if the entrance have been surpass
         pedestrian.hasEnter = True
-        print("surpass")
     return tracked_pedestrians
 
