@@ -56,4 +56,4 @@ En construcción ...
 
 # Licencia
 
-Este proyecto está licenciado bajo la licencia MIT - vea el documento [LICENSE.md](LICENSE.md) para más detalles.
+Este proyecto está licenciado bajo la licencia MIT - vea el documento [LICENSE.md](LICENSE) para más detalles.
