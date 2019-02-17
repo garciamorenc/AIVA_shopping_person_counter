@@ -4,15 +4,14 @@ from pedestrian.pedestrian_detector import PedestrianDetector
 from argparse import ArgumentParser
 
 
-def count(conf_path, video):
+def count(video):
     """
     It recognizes the total of people who pass in front of the store and do not get to enter
-    :param conf_path: configuration to use
     :param video: image sequence to detect
     :return: <int> total of people
     """
     total = 0
-    conf = AppConfiguration(conf_path)
+    conf = AppConfiguration()
     detector = PedestrianDetector()
 
     # TODO loop video
@@ -25,7 +24,6 @@ def count(conf_path, video):
             if item.is_valid:  # Left the scene and has not entered the store
                 total += 1
 
-    print('Total of people who did not enter the store: ' + str(total))
     return total
 
 
@@ -33,9 +31,9 @@ if __name__ == "__main__":
 
     # Reading arguments
     parser = ArgumentParser()
-    parser.add_argument("-c", "--configuration", dest="configuration", type=str, default='./config.xml')
-    parser.add_argument("-v", "--video", dest="video", type=str)
+    parser.add_argument("-v", "--video", dest="video", type=str, default=None)
 
     args = parser.parse_args()
 
-    count(args.configuration, args.video)
+    total = count(args.video)
+    print('Total of people who did not enter the store: ' + str(total))

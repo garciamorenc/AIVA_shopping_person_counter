@@ -4,10 +4,14 @@ from utils.bounding_box import Bbox
 
 class AppConfiguration:
 
-    def __init__(self, path):
-        self.path = path
+    def __init__(self, bbox=None):
+        self.path = './config.xml'
         self.shop_bbox = None
-        self.load()
+
+        if bbox:
+            self.set_configuration(bbox.x0, bbox.y0, bbox.x1, bbox.y1)
+        else:
+            self.load()
 
     def save(self):
         """
@@ -46,4 +50,3 @@ class AppConfiguration:
         """
         self.shop_bbox = Bbox(x0, y0, x1, y1)
         self.save()
-

@@ -7,7 +7,7 @@ import os.path
 class TestAppConfiguration(unittest.TestCase):
 
     def test_load(self):
-        conf = AppConfiguration('./config.xml')
+        conf = AppConfiguration()
         conf.load()
         self.assertEqual(10, conf.shop_bbox.x0)
         self.assertEqual(10, conf.shop_bbox.x1)
@@ -15,19 +15,18 @@ class TestAppConfiguration(unittest.TestCase):
         self.assertEqual(50, conf.shop_bbox.y1)
 
     def test_save(self):
-        file_path = './config.xml'
-        conf = AppConfiguration(file_path)
+        conf = AppConfiguration()
         x0 = 10
         y0 = 50
         x1 = 10
         y1 = 50
         conf.shop = Bbox(x0, y0, x1, y1)
         result = conf.save()
-        self.assertTrue(os.path.isfile(file_path))
+        self.assertTrue(os.path.isfile('./config.xml'))
         self.assertTrue(result)
 
     def test_set_configuration(self):
-        conf = AppConfiguration('./config.xml')
+        conf = AppConfiguration()
         x0 = 20
         y0 = 50
         x1 = 20
