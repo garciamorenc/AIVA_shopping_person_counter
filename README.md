@@ -2,7 +2,37 @@
 
 Es un proyecto de visión artificial cuyo cometido es cuantificar el número de personas que pasan de largo por el escaparate de un comercio y no llegan a entrar en el mismo.
 
-Se proveerá de una interfaz gráfica que facilite el uso del sistema implementado.
+El **cliente** José Vélez Serrano tiene la **necesidad** de conocer la cantidad de personas que pasan
+de largo por el escaparate de un comercio, sin entrar en el establecimiento. 
+
+Con el **objetivo** de conocer la capacidad de atracción del escaparate del comercio sobre los potenciales clientes.
+
+Para ello **se propone** establecer un sistema de video vigilancia sobre la entrada de la tienda, que permita informar con una posterior interfaz web al cliente de cuantos peatones han pasado de largo por el escaparate sin entrar en el comercio.
+
+
+Las características con las que el sistema deberá contar son las siguientes:
+
+- El sistema deberá contar con un sistema de videovigilancia encargado de la grabación de la zona del escaparate y
+entrada de la tienda.
+- Se desarrollará un sistema de visión artificial encargado de la detección de personas y de comprobar cuantas de
+estas no entran en el comercio, es decir, pasan de largo.
+- Se desarrollará una interfaz web a la cual se podrá acceder fácilmente desde dispositivos con conexión a internet,
+smartphones, ordenadores…
+- La interfaz web permitirá entrar con una clave de acceso al interesado, el cual podrá obtener las métricas de las
+personas que pasan de largo a lo largo de un día, respecto del total de personas que pasan por en frente del
+escaparate.
+
+Se aplican las siguientes **condiciones o restricciones** que deberá cumplir el sistema:
+
+- El sistema ha de ser capaz de registrar e identificar el número de personas que pasan por delante del escaparate
+con una precisión del 90% como mínimo, es decir que solo 1/10 personas puede no ser reconocida por el sistema.
+
+- El sistema habrá de funcionar durante las 24 horas del día, pero será el usuario el encargado de habilitar y
+deshabilitar el sistema durante las horas que el comercio permanezca cerrado en caso de desearlo.
+- El sistema deberá cumplir con Ley Orgánica de Protección de Datos y el Reglamento General de Protección de
+Datos europeo, debiendo entre otras cosas, colocar un cartel informativo sobre la existencia de videocámara, así
+como impresos para que los peatones puedan ejercer sus derechos.
+- El desarrollo de el proyecto se realizará en un plazo de dos meses una vez que se apruebe.
 
 # Prerequisitos
 
