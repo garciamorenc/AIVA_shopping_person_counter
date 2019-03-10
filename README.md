@@ -36,11 +36,22 @@ como impresos para que los peatones puedan ejercer sus derechos.
 
 # Prerequisitos
 
-Para la correcta ejecución de la aplicación es necesario tener instalado el módulo Numpy.
+Para la correcta ejecución de la aplicación es necesario tener instalado las siguientes dependencias.
 
 ```
 $ pip install numpy
 ```
+```
+$ pip install scikit-learn
+```
+```
+$ pip install opencv-python
+```
+```
+$ pip install opencv-opencv-contrib-python
+```
+
+
 
 # Test unitarios
 
