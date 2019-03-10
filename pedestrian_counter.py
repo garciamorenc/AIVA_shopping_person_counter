@@ -43,18 +43,22 @@ def count(video):
         #     break
 
         if (ret == False):
-            print("Bad frame")
+            print("End of the video reach")
             break
 
         # Detection
         pedestrians_bbox = detector.detect_news(frame=frame)
-        #pedestrians_bbox, weights = detector.detect_news_HOG(frame=frame)
 
         # Check video to see detections
         green_color = (0, 255, 0)
         draw_rectangles(frame, pedestrians_bbox, green_color)
         cv2.imshow("TEST", frame)
         cv2.waitKey(5)
+
+
+        # Tracking
+
+
 
         frame_counter = frame_counter + 1
 
@@ -81,8 +85,6 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
     video_path = args.video
-
-
 
     if (not os.path.isfile(args.video)):
         print("There is no valid file in the argument video, please check that the path to the video file is valid")

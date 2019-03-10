@@ -8,6 +8,7 @@ class Pedestrian:
         self.id = id
         self.bbox = bbox
         self.previous_bbox = None
+        self.matching_parameters = None
         self.hasEnter = False  # Enter to shop
         self.is_valid = False  # Passed in front of the store and has not entered
 

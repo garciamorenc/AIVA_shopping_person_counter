@@ -145,16 +145,24 @@ class PedestrianDetectorBackgroundSubstraction(PedestrianBaseDetector):
         self.backgroundSubtractor = BackgroundSubtraction()
         self.backgroundSubtractor.backgroundImage = cv2.imread(path_image_background) #TODO: Obtenerlo de la configuracion
         self.backgroundSubtractor.threshold = 30 #TODO: get from config
-        self.min_area_threshold = 100 #TODO: get from config
+        self.min_area_threshold = 200 #TODO: get from config
 
     def detect_news(self, frame):
         rectangles = []
 
+        #NOTA: LOS DOS SON BUENAS OPCIONES
         background_mask = self.backgroundSubtractor.static_subtraction(frame)
+        #background_mask = self.backgroundSubtractor.moving_average_exponential_subtraction_with_masking(frame, alpha=0.05)
 
-        kernel = cv2.getStructuringElement(cv2.MORPH_RECT,(5,5))
-        background_mask = cv2.morphologyEx(background_mask, cv2.MORPH_OPEN, kernel) #Eliminar ruido
-        background_mask = cv2.morphologyEx(background_mask, cv2.MORPH_CLOSE, kernel) #Juntar zonas
+        kernel_small = cv2.getStructuringElement(cv2.MORPH_RECT,(3,3))
+        #NOTA: AL ELIMINAR RUIDO TAMBIEN PODEMOS ESTAR ELIMINANDO ZONAS INTERESANTES QUE SE HAN DETECTADO POCO
+        background_mask = cv2.morphologyEx(background_mask, cv2.MORPH_OPEN, kernel_small) #Eliminar ruido pequeño
+
+        kernel_big = cv2.getStructuringElement(cv2.MORPH_RECT, (11, 11))
+        #NOTA: PARA JUNTAR LAS ZONAS QUE SON PERSONA
+        background_mask = cv2.morphologyEx(background_mask, cv2.MORPH_CLOSE, kernel_big) #Juntar zonas grandes
+
+        #background_mask = cv2.morphologyEx(background_mask, cv2.MORPH_OPEN, kernel_big) #Eliminar ruido
         # TODO: operaciones morfologicas como cierre y apertura para eliminar ruido y unir elementos que sean el
         #  mismo probar que tal el comportamiento.
 
@@ -163,7 +171,6 @@ class PedestrianDetectorBackgroundSubstraction(PedestrianBaseDetector):
         if (test):
             cv2.imshow("win", background_mask)
             cv2.waitKey(1)
-            cv2.destroyWindow("win")
 
         background_mask = background_mask.astype(np.uint8)
         im2, contours, hierarchy = cv2.findContours(background_mask, cv2.RETR_TREE,
@@ -177,12 +184,11 @@ class PedestrianDetectorBackgroundSubstraction(PedestrianBaseDetector):
                     top_left_point = (x, y)
                     bottom_rigth_point = (x + w, y + h)
                     rectangles.append((top_left_point, bottom_rigth_point))
+                    #print("Area: " + str(area))
 
         return rectangles
 
 
-
-    #
     # # NO DETECTA NADA
     # def detect_news_HOG(self, frame):
     #     # NO CREAR EL HOG DESCRIPTOR TODO EL RATO SINO CREARLO EN UN LOAD O ALGO.
