@@ -40,14 +40,8 @@ Para la correcta ejecución de la aplicación es necesario tener instalado las s
 
 ```
 $ pip install numpy
-```
-```
 $ pip install scikit-learn
-```
-```
 $ pip install opencv-python
-```
-```
 $ pip install opencv-opencv-contrib-python
 ```
 
