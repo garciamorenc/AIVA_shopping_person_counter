@@ -4,7 +4,8 @@ import sys
 import os
 from configuration.app_configuration import AppConfiguration
 from pedestrian.pedestrian_detector import PedestrianDetectorSSD, PedestrianDetectorBackgroundSubstraction
-from utils.drawer import draw_rectangles
+from pedestrian.tracker import CentroidTracker
+from utils.drawer import draw_rectangles, draw_pedestrians
 from argparse import ArgumentParser
 
 
@@ -23,6 +24,8 @@ def count(video):
 
     detector = PedestrianDetectorBackgroundSubstraction()
     detector.load(conf, os.path.normpath(r"resources/background_image.png"))
+
+    tracker = CentroidTracker()
 
     #READ VIDEO
     cap = cv2.VideoCapture(video)
@@ -48,10 +51,12 @@ def count(video):
 
         # Detection
         pedestrians_bbox = detector.detect_news(frame=frame)
+        pedestrian_list = tracker.tracker_update(pedestrians_bbox)
+
 
         # Check video to see detections
         green_color = (0, 255, 0)
-        draw_rectangles(frame, pedestrians_bbox, green_color)
+        draw_pedestrians(frame, pedestrian_list, green_color)
         cv2.imshow("TEST", frame)
         cv2.waitKey(5)
 
