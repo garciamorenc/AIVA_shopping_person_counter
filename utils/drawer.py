@@ -28,12 +28,23 @@ def draw_pedestrians(image, list_pedestrians, color):
     bbox_list = [pedestrian.bbox for pedestrian in list_pedestrians]
     draw_rectangles(image, bbox_list, color)
 
+    redColor = (0, 0, 255)
+
     for pedestrian in list_pedestrians:
         id = str(pedestrian.id)
         bottomLeftCornerOfText = pedestrian.bbox[0][0], pedestrian.bbox[0][1] - 5
         font = cv2.FONT_HERSHEY_SIMPLEX
         fontScale = 0.65
-        fontColor = color
-        thickness = 1
+        fontColor = redColor
+        thickness = 2
 
         cv2.putText(image, id, bottomLeftCornerOfText, font, fontScale, fontColor, thickness)
+
+        # Centroid show
+        bbox = pedestrian.bbox
+        x = round((bbox[0][0] + bbox[1][0]) / 2)
+        y = round((bbox[0][1] + bbox[1][1]) / 2)
+        centroid = (x, y)
+
+        fillCircle = -1
+        cv2.circle(image, centroid, 3, redColor, fillCircle)

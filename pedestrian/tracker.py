@@ -88,7 +88,7 @@ class CentroidTracker(BaseTracker):
     def __init__(self):
         super(CentroidTracker, self).__init__()
         #TODO: get from configuration
-        self.centroid_max_distance = 30     #Distancia max a la que considerar que podemos matcher centroides
+        self.centroid_max_distance = 50     #Distancia max a la que considerar que podemos matcher centroides
 
     def tracker_update(self, new_detections_bbox):
         '''
@@ -149,12 +149,18 @@ class CentroidTracker(BaseTracker):
             new_bbox = new_detections_list[row_number]
             pedestrian_index = distance_matrix[row_number].argmin() #Cogemos el indice del pedestrian que mas cercano esta
 
+
             # CASO: Mayor numero de detectiones nuevas que antiguas.
             # Check that the pedestrian hasnt been updated already in this iteration.
             if (self.pedestrian_list[pedestrian_index].updated):
                 # Create a new pedestrian
                 self.add_new_pedestrian(bbox=new_bbox)
                 continue
+
+            # Comprobar que la distancia minima, no es mayor del threshold. En el momento que lo sea, como esta ordenado
+            # todos los demas sobrepasaran el threshold tambien.
+            if (distance_matrix[row_number].min() >= self.centroid_max_distance):
+                break
 
             self.update_pedestrian(self.pedestrian_list[pedestrian_index].id, bbox=new_bbox, matching_parameters=None)
 

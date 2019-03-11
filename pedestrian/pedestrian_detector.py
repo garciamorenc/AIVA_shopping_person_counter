@@ -145,7 +145,7 @@ class PedestrianDetectorBackgroundSubstraction(PedestrianBaseDetector):
         self.backgroundSubtractor = BackgroundSubtraction()
         self.backgroundSubtractor.backgroundImage = cv2.imread(path_image_background) #TODO: Obtenerlo de la configuracion
         self.backgroundSubtractor.threshold = 30 #TODO: get from config
-        self.min_area_threshold = 200 #TODO: get from config
+        self.min_area_threshold = 250 #TODO: get from config
 
     def detect_news(self, frame):
         rectangles = []
