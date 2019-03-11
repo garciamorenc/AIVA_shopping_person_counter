@@ -60,11 +60,6 @@ def count(video):
         cv2.imshow("TEST", frame)
         cv2.waitKey(5)
 
-
-        # Tracking
-
-
-
         frame_counter = frame_counter + 1
 
 
