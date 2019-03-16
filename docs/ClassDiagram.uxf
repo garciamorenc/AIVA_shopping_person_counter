@@ -1,0 +1,76 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>460</x><y>590</y><w>460</w><h>130</h></coordinates><panel_attributes>BackgroundSubtraction
+--
++backgroundImage: array
++threshold: int
+--
++__init__() : BackgroundSubtraction
++static_subtraction(frame: array) : np.array
++moving_average_exponential_subtraction(frame: np.array, alpha: int) : np.array</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>0</y><w>240</w><h>220</h></coordinates><panel_attributes>Pedestrian
+--
++id: int
++bbox: Bbox
++previous_bbox : Bbox 
++updated : bool
++remove_counter : bool
++hasEnter : bool
++is_valid : bool
+--
++__init__(id: int, bbox: Bbox) : Pedestrian
++ tracking() 
++ check_valid_boundary()
++check_shop_boundary()</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>260</y><w>470</w><h>100</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
+/PedestrianBaseDetector/
+--
+
+--
+/+load(app_configuration: AppConfiguration , path_image_background: np.array): void/
+/+detect_news(frame: np.array): list&lt;Bbox&gt;/</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>830</x><y>400</y><w>450</w><h>140</h></coordinates><panel_attributes>PedestrianDetectorBackgroundSubstraction
+--
++detections : list&lt;Bbox&gt;
++backgroundSubtractor : BackgroundSubtraction
++min_area_threshold: int
+--
++__init__() : PedestrianDetectorBackgroundSubstraction
++load(app_configuration: AppConfiguration , path_image_background: np.array): void
++detect_news(frame: np.array): list&lt;Bbox&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>1010</x><y>350</y><w>30</w><h>70</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>590</x><y>440</y><w>260</w><h>170</h></coordinates><panel_attributes>lt=&lt;-
+m1=1 Ver si esto es asi o una de asociacion</panel_attributes><additional_attributes>240;10;110;10;110;150</additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>790</y><w>470</w><h>190</h></coordinates><panel_attributes>&lt;&lt;Abstract&gt;&gt;
+/BaseTracker/
+--
++pedestrian_list: list&lt;Pedestrian&gt;
++pedestrian_has_exit_scene_max_count: int
+-id_count: int
+--
+-__init__(): BaseTracker
+/+tracker_update(new_dectections_bbox: list&lt;Bbox&gt;): list&lt;Pedestrian&gt;/
+-get_next_id(): int
++add_new_pedestrian(bbox: Bbox) : void
++update_pedestrian(id: int, bbox: Bbox) : bool
++remove_pedestrian(id: int): bool
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>560</x><y>1050</y><w>470</w><h>150</h></coordinates><panel_attributes>CentroidTracker
+--
++centroid_max_distance: int
+--
+-__init__(): BaseTracker
+- __match_pedestrians(new_detections_list: list&lt;Bbox&gt;) : void
+- __get_centroid(bbox: Bbox) : centroid : tupla [DEBERIA SER UN POINT O ALGO ASI] Y LA CLASE BBOX DEBERIA SER UN CONJUNTO DE DOS PUNTOS.]
+- __get_centroid_list(bbox_list: list&lt;Bbox&gt;): list&lt;Point&gt;
++tracker_update(new_dectections_bbox: list&lt;Bbox&gt;): list&lt;Pedestrian&gt;
++ get_centroids_pedestrians(pedestrian_list: list&lt;Pedestrian&gt;): list&lt;Point&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>780</y><w>270</w><h>130</h></coordinates><panel_attributes>Bbox
+--
++ x0: int
++ y0: int
++ x1: int
++ y1: int
+--
+-__init__(x0: int, y0: int, x1: int y1: int): Bbox
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>0</x><y>1060</y><w>270</w><h>130</h></coordinates><panel_attributes>AppConfiguration
+--
++ path: string
++ shop_bbox: Bbox
+--
+-__init__(bbox: Bbox): AppConfiguration
++ load(): void
++ save(): void
++ set_configuration(PARAMETROS QUE FALTAN): void
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>770</x><y>970</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;80</additional_attributes></element></diagram>
