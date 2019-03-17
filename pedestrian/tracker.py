@@ -5,11 +5,12 @@ import numpy as np
 #Centroid
 from sklearn.metrics.pairwise import euclidean_distances
 
+
 class BaseTracker(ABC):
     def __init__(self):
         self.pedestrian_list = []
         #TODO: get from configuration
-        self.pedestrian_has_exit_scene_max_count = 50 #El video va a 25 FPS por lo tanto consideramos que ha desaparecido
+        self.pedestrian_has_exit_scene_max_count = 50  # El video va a 25 FPS por lo tanto consideramos que ha desaparecido
         # tras dos segundos sin verlo.
         self.__id_count = 0
 
@@ -55,6 +56,7 @@ class BaseTracker(ABC):
         for pedestrian in self.pedestrian_list:
             if (pedestrian.id == id):
                 result = True
+                pedestrian.previous_bbox = pedestrian.bbox
                 pedestrian.bbox = bbox
                 pedestrian.matching_parameters = matching_parameters
                 pedestrian.updated = True
@@ -79,6 +81,7 @@ class BaseTracker(ABC):
                     pedestrian.remove_counter = pedestrian.remove_counter + 1
 
         return result
+
 
 class CentroidTracker(BaseTracker):
     '''
@@ -172,24 +175,27 @@ class CentroidTracker(BaseTracker):
 
         return
 
-
-    def __get_centroid(self, bbox):
-        '''
+    @staticmethod
+    def __get_centroid(bbox):
+        """
         Given a bbox with (top_left_point, bottom_rigth_point) get the centroid of that bbox
         :param bbox:
         :return:
-        '''
-        x = (bbox[0][0] + bbox[1][0]) / 2
-        y = (bbox[0][1] + bbox[1][1]) / 2
+        """
+        #TODO que poner
+        #x = (bbox[0][0] + bbox[1][0]) / 2
+        #y = (bbox[0][1] + bbox[1][1]) / 2
+        x = (bbox.x0 + bbox.x1) / 2
+        y = (bbox.y0 + bbox.y1) / 2
         centroid = (x, y)
         return centroid
 
     def __get_centroids_list(self, bbox_list):
-        '''
+        """
         Given a bbox list returns the centroids of those coordinates
         :param bbox_list: A list of bbox (top_left_point, bottom_rigth_point)
         :return: List with the centroids of each pedestrian
-        '''
+        """
         centroids_list = []
         for bbox in bbox_list:
             x, y = self.__get_centroid(bbox)
@@ -198,12 +204,12 @@ class CentroidTracker(BaseTracker):
         return centroids_list
 
     def get_centroids_pedestrians(self, pedestrian_list):
-        '''
+        """
         Given a list of pedestrians, returns a list of centroids for the bbox of those pedestrians.
         :param pedestrian_list:
-        :return: A list with centroids.
-        '''
-        centroids_list = []
+        :return:
+        """
+        #TODO que poner
         bbox_list = [pedestrian.bbox for pedestrian in pedestrian_list]
         centroids_list = self.__get_centroids_list(bbox_list)
 

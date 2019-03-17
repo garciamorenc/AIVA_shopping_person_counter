@@ -11,4 +11,5 @@ if __name__ == "__main__":
 
     bbox = Bbox(args.coords[0], args.coords[1], args.coords[2], args.coords[3])
     conf = AppConfiguration(bbox)
+    # TODO meter background en configuracion
     print('Configuration saved to config.xml')

@@ -1,50 +1,60 @@
 import cv2
 
-def draw_rectangles(image, list_rectangles, color):
-    '''
-    Given a set of rectangles and an image this allows to paint them on the image with the desired color
-    :param image: Image on which the rectangles will be drawn
-    :param list_rectangles: list with rectangles, a rectangle is a tupla of two points which are tuplas.
-    Eg = ((x0, y0), (x1, y1)) Being the first point the left-top and the second point the right-bottom of the bbox.
-    :param color: Color of the rectangle that will be drawn
-    :return: Empty.
-    '''
-    if (len(list_rectangles) > 0):
-        for rectangle in list_rectangles:
 
-            left_top_point = rectangle[0]
-            right_bottom_point = rectangle[1]
-            cv2.rectangle(image, left_top_point, right_bottom_point, color, thickness=2)
+class Drawer:
 
+    @staticmethod
+    def __draw_rectangles(image, list_rectangles, color):
+        """
+        Given a set of rectangles and an image this allows to paint them on the image with the desired color
+        :param image: Image on which the rectangles will be drawn
+        :param list_rectangles: list with rectangles, a rectangle is a tuplE of two points which are tuples.
+            Eg = ((x0, y0), (x1, y1)) Being the first point the left-top and the second point the right-bottom 
+            of the bbox.
+        :param color: Color of the rectangle that will be drawn
+        """
+        if len(list_rectangles) > 0:
+            for rectangle in list_rectangles:
+                #left_top_point = rectangle[0]
+                #right_bottom_point = rectangle[1]
+                #cv2.rectangle(image, left_top_point, right_bottom_point, color, thickness=2)
+                cv2.rectangle(image, (rectangle.x0, rectangle.y0), (rectangle.x1, rectangle.y1), color, thickness=2)
 
-def draw_pedestrians(image, list_pedestrians, color):
-    '''
-    Given a list of pedestrians, the bbox and the id for that pedestrian is draw
-    :param image:
-    :param list_pedestrians:
-    :param color:
-    :return:
-    '''
-    bbox_list = [pedestrian.bbox for pedestrian in list_pedestrians]
-    draw_rectangles(image, bbox_list, color)
+    @staticmethod
+    def draw_pedestrians(image, list_pedestrians, color):
+        """
+        Given a list of pedestrians, the bbox and the id for that pedestrian is draw
+        :param image: Image on which the rectangles will be drawn
+        :param list_pedestrians: list pedestrians to draw it
+        :param color: Color of the rectangle that will be drawn
+        """
+        bbox_list = [pedestrian.bbox for pedestrian in list_pedestrians]
+        Drawer.__draw_rectangles(image, bbox_list, color)
 
-    redColor = (0, 0, 255)
+        red_color = (0, 0, 255)
 
-    for pedestrian in list_pedestrians:
-        id = str(pedestrian.id)
-        bottomLeftCornerOfText = pedestrian.bbox[0][0], pedestrian.bbox[0][1] - 5
-        font = cv2.FONT_HERSHEY_SIMPLEX
-        fontScale = 0.65
-        fontColor = redColor
-        thickness = 2
+        for pedestrian in list_pedestrians:
+            id = str(pedestrian.id)
+            #bottom_left_corner_text = pedestrian.bbox[0][0], pedestrian.bbox[0][1] - 5
+            bottom_left_corner_text = pedestrian.bbox.x0, pedestrian.bbox.y0 - 5
+            font = cv2.FONT_HERSHEY_SIMPLEX
+            font_scale = 0.65
+            font_color = red_color
+            thickness = 2
 
-        cv2.putText(image, id, bottomLeftCornerOfText, font, fontScale, fontColor, thickness)
+            cv2.putText(image, id, bottom_left_corner_text, font, font_scale, font_color, thickness)
 
-        # Centroid show
-        bbox = pedestrian.bbox
-        x = round((bbox[0][0] + bbox[1][0]) / 2)
-        y = round((bbox[0][1] + bbox[1][1]) / 2)
-        centroid = (x, y)
+            # Centroid show
+            #bbox = pedestrian.bbox
+            #x = round((bbox[0][0] + bbox[1][0]) / 2)
+            #y = round((bbox[0][1] + bbox[1][1]) / 2)
+            x = round((pedestrian.bbox.x0 + pedestrian.bbox.x1) / 2)
+            y = round((pedestrian.bbox.y0 + pedestrian.bbox.y1) / 2)
+            centroid = (x, y)
 
-        fillCircle = -1
-        cv2.circle(image, centroid, 3, redColor, fillCircle)
+            fill_circle = -1
+            cv2.circle(image, centroid, 3, red_color, fill_circle)
+
+    @staticmethod
+    def draw_shop_boundary(image, boundary):
+        cv2.rectangle(image, (boundary.x0, boundary.y0), (boundary.x1, boundary.y1), (255, 0, 255), thickness=2)

@@ -14,33 +14,42 @@ class Pedestrian:
         self.hasEnter = False  # Enter to shop
         self.is_valid = False  # Passed in front of the store and has not entered
 
-    def tracking(self, boundary):
+    def validate(self, boundary):
         """
         Tracking the pedestrian to know if he has entered the store or not
         :param boundary: shop boundary
         :return Boolean
         """
-        self.previous_bbox = self.bbox
-        self.bbox = Bbox(0, 0, 10, 10)
+        if self.previous_bbox and not self.hasEnter:
+            previous_point = int((self.previous_bbox.x0 + self.previous_bbox.x1) / 2)
+            point = int((self.bbox.x0 + self.bbox.x1) / 2)
 
-        self._check_shop_boundary(boundary)
-        if not self.hasEnter:
-            self._check_valid_boundary(boundary)
+            self.__check_shop_boundary(boundary, previous_point)
+            if not self.hasEnter:
+                self.__check_valid_boundary(boundary, previous_point, point)
 
-        return self.is_valid
+            return point, self.bbox.y1
+        else:
+            return 0, 0 #TODO borrar y devolver bool
 
-    def _check_valid_boundary(self, boundary):
+    def __check_valid_boundary(self, boundary, previous_point, actual_point):
         """
         Check if a pedestrian has passed in front of the store and has not entered
         :param boundary: shop boundary
         """
-        self.is_valid = bool(random.getrandbits(1))
+        previous = (boundary.x0 < previous_point < boundary.x1) and \
+                   (boundary.y0 < self.previous_bbox.y1 < boundary.y1)
 
-    def _check_shop_boundary(self, boundary):
+        now = (boundary.x0 > actual_point) or (boundary.x1 < actual_point)
+
+        self.is_valid = previous and now
+        return previous and now
+
+    def __check_shop_boundary(self, boundary, actual_point):
         """
         Check if the pedestrian has entered or left the store
         :param boundary: shop boundary
         """
-        self.hasEnter = bool(random.getrandbits(1))
+        self.hasEnter = (boundary.x0 <= actual_point <= boundary.x1) and (boundary.y0 >= self.bbox.y1)
 
 
