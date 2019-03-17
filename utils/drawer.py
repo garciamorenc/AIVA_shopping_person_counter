@@ -15,9 +15,6 @@ class Drawer:
         """
         if len(list_rectangles) > 0:
             for rectangle in list_rectangles:
-                #left_top_point = rectangle[0]
-                #right_bottom_point = rectangle[1]
-                #cv2.rectangle(image, left_top_point, right_bottom_point, color, thickness=2)
                 cv2.rectangle(image, (rectangle.x0, rectangle.y0), (rectangle.x1, rectangle.y1), color, thickness=2)
 
     @staticmethod
@@ -35,7 +32,6 @@ class Drawer:
 
         for pedestrian in list_pedestrians:
             id = str(pedestrian.id)
-            #bottom_left_corner_text = pedestrian.bbox[0][0], pedestrian.bbox[0][1] - 5
             bottom_left_corner_text = pedestrian.bbox.x0, pedestrian.bbox.y0 - 5
             font = cv2.FONT_HERSHEY_SIMPLEX
             font_scale = 0.65
@@ -45,9 +41,6 @@ class Drawer:
             cv2.putText(image, id, bottom_left_corner_text, font, font_scale, font_color, thickness)
 
             # Centroid show
-            #bbox = pedestrian.bbox
-            #x = round((bbox[0][0] + bbox[1][0]) / 2)
-            #y = round((bbox[0][1] + bbox[1][1]) / 2)
             x = round((pedestrian.bbox.x0 + pedestrian.bbox.x1) / 2)
             y = round((pedestrian.bbox.y0 + pedestrian.bbox.y1) / 2)
             centroid = (x, y)
@@ -57,4 +50,9 @@ class Drawer:
 
     @staticmethod
     def draw_shop_boundary(image, boundary):
+        """
+        Given a image and a shop boundary to draw it
+        :param image: camera image
+        :param boundary: shop boundary
+        """
         cv2.rectangle(image, (boundary.x0, boundary.y0), (boundary.x1, boundary.y1), (255, 0, 255), thickness=2)

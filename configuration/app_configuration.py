@@ -4,13 +4,13 @@ from utils.bounding_box import Bbox
 
 class AppConfiguration:
 
-    def __init__(self, bbox=None):
+    def __init__(self, bbox=None, background=None):
         self.path = './config.xml'
         self.shop_bbox = None
         self.background = None
 
-        if bbox:
-            self.set_configuration(bbox.x0, bbox.y0, bbox.x1, bbox.y1)
+        if bbox and background:
+            self.set_configuration(bbox.x0, bbox.y0, bbox.x1, bbox.y1, background)
         else:
             self.load()
 

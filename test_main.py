@@ -1,9 +1,9 @@
 import unittest
 
 
-def run(path):
+def run(test_path):
     loader = unittest.TestLoader()
-    start_dir = path
+    start_dir = test_path
     suite = loader.discover(start_dir)
 
     runner = unittest.TextTestRunner()

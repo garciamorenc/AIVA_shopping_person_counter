@@ -4,11 +4,11 @@ import cv2
 
 class BackgroundSubtraction:
 
-    def __init__(self, background, threshold):
-        self.backgroundImage = background
-        self.threshold = threshold
-        self.background_images_count = 0
-        self.ringbuffer_backgrounds = None
+    def __init__(self, background, __threshold):
+        self.__backgroundImage = background
+        self.__threshold = __threshold
+        self.__background_images_count = 0
+        self.__ringbuffer_backgrounds = None
 
     def static_subtraction(self, frame):
         """
@@ -16,11 +16,11 @@ class BackgroundSubtraction:
         :param frame: input image to apply static subtraction
         :return:
         """
-        #TODO que coño devuelve ¿?¿?
+        #TODO poner que devuelve
         frame = frame.astype(np.int16)
-        self.backgroundImage = self.backgroundImage.astype(np.int16)
-        subtraction = np.abs(np.subtract(frame, self.backgroundImage))
-        subtraction_mask = (subtraction[:, :, 0] > self.threshold) | (subtraction[:, :, 1] > self.threshold) | (subtraction[:, :, 2] > self.threshold)
+        self.__backgroundImage = self.__backgroundImage.astype(np.int16)
+        subtraction = np.abs(np.subtract(frame, self.__backgroundImage))
+        subtraction_mask = (subtraction[:, :, 0] > self.__threshold) | (subtraction[:, :, 1] > self.__threshold) | (subtraction[:, :, 2] > self.__threshold)
         subtraction_mask = np.multiply(1, subtraction_mask).astype(float)
 
         return subtraction_mask
@@ -37,10 +37,10 @@ class BackgroundSubtraction:
         :param alpha:
         :return:
         """
-        #TODO que pongo ¿?¿?
+        #TODO poner que devuelve
         # With this new background, subtract the background to the new frame
         subtraction_mask = self.static_subtraction(frame)
         # Update the background using the moving average
-        accu_weight = cv2.accumulateWeighted(frame, self.backgroundImage.astype(float), alpha)
-        self.backgroundImage = cv2.convertScaleAbs(accu_weight)  # Use this to convert to uint8
+        accu_weight = cv2.accumulateWeighted(frame, self.__backgroundImage.astype(float), alpha)
+        self.__backgroundImage = cv2.convertScaleAbs(accu_weight)  # Use this to convert to uint8
         return subtraction_mask

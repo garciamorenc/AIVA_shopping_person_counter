@@ -1,17 +1,23 @@
 import unittest
-import numpy as np
-from pedestrian.pedestrian_detector import PedestrianDetector
+import cv2
+from pedestrian.pedestrian_detector import PedestrianDetectorBackgroundSubtraction
 
 
 class TestPedestrianDetector(unittest.TestCase):
 
     def test_detect_news(self):
-        detector = PedestrianDetector()
-        image = np.zeros((10, 10))
-        detections = detector.detect_news(image)
-        self.assertEqual(detections, detector.detections)
-        self.assertIsNotNone(detections)
-        self.assertIsInstance(detections, list)
+        detector = PedestrianDetectorBackgroundSubtraction('resources/background.png', False)
+        cap = cv2.VideoCapture('dataset_2/ThreePastShop1front.mpg')
+        pedestrians_bbox = []
+        ret, frame = cap.read()
+        if ret:
+            pedestrians_bbox = detector.detect_news(frame=frame)
+        else:
+            self.assertFalse(False)
+
+        self.assertIsNotNone(pedestrians_bbox)
+        self.assertTrue(pedestrians_bbox.__len__() == 2)
+        self.assertIsInstance(pedestrians_bbox, list)
 
 
 if __name__ == '__main__':

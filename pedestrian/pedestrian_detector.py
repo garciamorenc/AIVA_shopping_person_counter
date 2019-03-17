@@ -14,14 +14,13 @@ class PedestrianBaseDetector(ABC):
 class PedestrianDetectorBackgroundSubtraction(PedestrianBaseDetector):
 
     def __init__(self, background, debug=False):
-        self.detections = []
-        self.backgroundSubtraction = BackgroundSubtraction(cv2.imread(background), 30)
-        self.min_area_threshold = 250  # The minimum area a contour must have in order to be considered a detection.
-        self.debug = debug
+        self.__backgroundSubtraction = BackgroundSubtraction(cv2.imread(background), 30)
+        self.__min_area_threshold = 250  # The minimum area a contour must have in order to be considered a detection.
+        self.__debug = debug
 
     def detect_news(self, frame):
         rectangles = []
-        background_mask = self.backgroundSubtraction.moving_average_exponential_subtraction(frame, alpha=0.05)
+        background_mask = self.__backgroundSubtraction.moving_average_exponential_subtraction(frame, alpha=0.05)
 
         kernel_small = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
         background_mask = cv2.morphologyEx(background_mask, cv2.MORPH_OPEN, kernel_small)
@@ -30,7 +29,7 @@ class PedestrianDetectorBackgroundSubtraction(PedestrianBaseDetector):
         background_mask = cv2.morphologyEx(background_mask, cv2.MORPH_CLOSE, kernel_big)
 
         # Debug mode
-        if self.debug:
+        if self.__debug:
             cv2.imshow("win", background_mask)
             cv2.waitKey(1)
 
@@ -41,12 +40,9 @@ class PedestrianDetectorBackgroundSubtraction(PedestrianBaseDetector):
             for contour in contours:
                 x, y, w, h = cv2.boundingRect(contour)
                 area = cv2.contourArea(contour)
-                if area > self.min_area_threshold:
-                    top_left_point = (x, y)
-                    bottom_right_point = (x + w, y + h)
+                if area > self.__min_area_threshold:
                     bbox = Bbox(x, y, x+w, y+h)
                     rectangles.append(bbox)
-                    #rectangles.append((top_left_point, bottom_right_point))
 
         return rectangles
 
