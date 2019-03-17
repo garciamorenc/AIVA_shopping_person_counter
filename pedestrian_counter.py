@@ -9,6 +9,10 @@ from argparse import ArgumentParser
 
 
 class PedestrianCounter:
+    """
+    This is the main class of the project. Is used to get a count of the pedestrians that passes in front of the store
+    without entering the store.
+    """
     def count(self, video, debug):
         """
         It recognizes the total of people who pass in front of the store and do not get to enter

@@ -6,12 +6,26 @@ from utils.bounding_box import Bbox
 
 
 class PedestrianBaseDetector(ABC):
+    """
+    Interface that represents a common pedestrian detector class.
+    """
     @abstractmethod
     def detect_news(self, frame):
-        pass
+        """
+        Abstract method that has to be implemented to detect pedestrian by the class that inherits the
+        PedestrianBaseDetector.
+        :param frame: The frame to apply the detection to
+        :return: Raise NotImplementedError exception
+        """
+        raise NotImplementedError
 
 
 class PedestrianDetectorBackgroundSubtraction(PedestrianBaseDetector):
+    """
+    Class that implments the interface PedestrianBaseDetector. This class uses background subtraction techniques to
+    detect changes on the image, and then using morphological operations and some conditions retrieves the detections
+    that are Pedestrians.
+    """
 
     def __init__(self, background, debug=False):
         self.__backgroundSubtraction = BackgroundSubtraction(cv2.imread(background), 30)
@@ -19,7 +33,12 @@ class PedestrianDetectorBackgroundSubtraction(PedestrianBaseDetector):
         self.__debug = debug
 
     def detect_news(self, frame):
-        rectangles = []
+        """
+        Method that given an image (frame) returns the Bbox that are Pedestrians.
+        :param frame: Image where the detections will be made
+        :return: A list of Bbox, each Bbox represents a Pedestrian location.
+        """
+        detections_list = []
         background_mask = self.__backgroundSubtraction.moving_average_exponential_subtraction(frame, alpha=0.05)
 
         kernel_small = cv2.getStructuringElement(cv2.MORPH_RECT, (3, 3))
@@ -38,11 +57,11 @@ class PedestrianDetectorBackgroundSubtraction(PedestrianBaseDetector):
 
         if len(contours) > 0:
             for contour in contours:
-                x, y, w, h = cv2.boundingRect(contour)
                 area = cv2.contourArea(contour)
                 if area > self.__min_area_threshold:
+                    x, y, w, h = cv2.boundingRect(contour)
                     bbox = Bbox(x, y, x+w, y+h)
-                    rectangles.append(bbox)
+                    detections_list.append(bbox)
 
-        return rectangles
+        return detections_list
 

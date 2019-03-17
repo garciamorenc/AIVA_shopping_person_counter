@@ -3,7 +3,9 @@ from utils.bounding_box import Bbox
 
 
 class AppConfiguration:
-
+    """
+    Class that contains the configuration of the application. The configuration is loaded from an xml file.
+    """
     def __init__(self, bbox=None, background=None):
         self.path = './config.xml'
         self.shop_bbox = None
