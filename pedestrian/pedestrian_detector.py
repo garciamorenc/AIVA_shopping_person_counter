@@ -22,7 +22,7 @@ class PedestrianBaseDetector(ABC):
 
 class PedestrianDetectorBackgroundSubtraction(PedestrianBaseDetector):
     """
-    Class that implments the interface PedestrianBaseDetector. This class uses background subtraction techniques to
+    Class that implements the interface PedestrianBaseDetector. This class uses background subtraction techniques to
     detect changes on the image, and then using morphological operations and some conditions retrieves the detections
     that are Pedestrians.
     """
