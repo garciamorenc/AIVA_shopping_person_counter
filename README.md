@@ -69,13 +69,13 @@ En primer lugar es necesario parametrizar la configuración que utilizaremos ind
 
 
 ### Resultados
-A través del módulo pedestrian_counter.py realizaremos el conteo de personas que han pasado por delante del comercio y no han llegado a entrar. Para ello es necesario indicar el video sobre el cual queremos aplicar el algoritmo, además exite la opción de ver los resultados durante la ejecución o no, si indicamos el parámero **-t** se mostrarán los resultados. Se recomindoa el uso de los datos indicados en la siguiente instrucción.
+A través del módulo pedestrian_counter.py realizaremos el conteo de personas que han pasado por delante del comercio y no han llegado a entrar. Para ello es necesario indicar el video sobre el cual queremos aplicar el algoritmo, además exite la opción de ver los resultados durante la ejecución o no, si indicamos el parámero **-t** se mostrarán los resultados (en caso de no querer ver los resultados bastará con no indicar dicho parámetro). Se recomienda el uso de los datos indicados en la siguiente instrucción.
 
 ``$ python pedestrian_counter.py -v dataset_2/ThreePastShop1front.mpg -t``
 
 Si la ejecución ha sido correcta nos mostrará el restultado por pantalla:
 
-``Total of people who did not enter the store: 1``
+``Total of people who did not enter the store: 3``
 
 
 ## Interfaz web
