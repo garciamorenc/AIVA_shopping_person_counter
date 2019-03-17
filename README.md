@@ -35,14 +35,15 @@ como impresos para que los peatones puedan ejercer sus derechos.
 - El desarrollo de el proyecto se realizará en un plazo de dos meses una vez que se apruebe.
 
 # Prerequisitos
-
+El proyecto se ha desarrollado con la versión de python 3.6. Cualquier versión de python 3.X.X deberia funcionar.
+En caso de no contar con una instalación de python 3.X.X, por favor instale una.
+Se recomienda la creación de un entorno virtual mediante por ejemplo "virtualenv" aunque no es necesario.
 Para la correcta ejecución de la aplicación es necesario tener instalado las siguientes dependencias.
 
 ```
 $ pip install numpy
 $ pip install scikit-learn
-$ pip install opencv-python
-$ pip install opencv-opencv-contrib-python
+$ pip install opencv-python==3.4.2.16
 ```
 
 
