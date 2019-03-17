@@ -63,15 +63,15 @@ Podemos ejecutar la aplicación mediante la linea de commando o una interfaz gr�
 ## Linea de comandos
 
 ### Configuración
-En primer lugar es necesario parametrizar la configuración que utilizaremos indicando las coordenadas de la entrada del comercio (x0, y0, x1, y1).
+En primer lugar es necesario parametrizar la configuración que utilizaremos indicando las coordenadas de la entrada del comercio (x0, y0, x1, y1) y una imagen de nuestro comercion sin ninguna oclusión. Se recomienda el uso de los datos indicados en la siguiente instrucción.
 
-``$ python initialize_configuration.py -c 10 10 50 50``
+``$ python initialize_configuration.py -c 214 135 360 200 -b resources/background.png``
 
 
 ### Resultados
-A través del módulo pedestrian_counter.py realizaremos el conteo de personas que han pasado por delante del comercio y no han llegado a entrar.
+A través del módulo pedestrian_counter.py realizaremos el conteo de personas que han pasado por delante del comercio y no han llegado a entrar. Para ello es necesario indicar el video sobre el cual queremos aplicar el algoritmo, además exite la opción de ver los resultados durante la ejecución o no, si indicamos el parámero **-t** se mostrarán los resultados. Se recomindoa el uso de los datos indicados en la siguiente instrucción.
 
-``$ python pedestrian_counter.py -v /path/to/video``
+``$ python pedestrian_counter.py -v dataset_2/ThreePastShop1front.mpg -t``
 
 Si la ejecución ha sido correcta nos mostrará el restultado por pantalla:
 

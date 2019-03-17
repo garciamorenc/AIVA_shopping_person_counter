@@ -68,6 +68,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("-v", "--video", required=True, dest="video", type=str, help="path where the video is",
                         default=None)
+    parser.add_argument("-t", "--test", dest="test", help="testing mode", action='store_true')
 
     args = parser.parse_args()
     video_path = args.video
@@ -79,5 +80,5 @@ if __name__ == "__main__":
         video_path = os.path.normpath(video_path)
 
     counter = PedestrianCounter()
-    total = counter.count(video_path, True)
+    total = counter.count(video_path, args.test)
     print('Total of people who did not enter the store: ' + str(total))
