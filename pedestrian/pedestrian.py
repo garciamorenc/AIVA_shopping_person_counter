@@ -1,5 +1,9 @@
 class Pedestrian:
-
+    """
+    Class that represents a pedestrian. The pedestrian has a unique id to identify it, a bbox with the rectangle where
+    the pedestrian was seen for the las time, a previous_bbox that contains the previous location of the pedestrian, and
+    several boolean values to keep track of the status of the pedestrian.
+    """
     def __init__(self, pedestrian_id, bbox):
         self.id = pedestrian_id
         self.bbox = bbox

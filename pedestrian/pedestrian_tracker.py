@@ -7,51 +7,52 @@ from sklearn.metrics.pairwise import euclidean_distances
 
 
 class BaseTracker(ABC):
+    """
+    Abstract class used as a base for trackers.
+    """
     def __init__(self):
         self.pedestrian_list = []
-        #TODO: get from configuration
-        self.__pedestrian_has_exit_scene_max_count = 50  # El video va a 25 FPS por lo tanto consideramos que ha desaparecido
-        # tras dos segundos sin verlo.
+        # This value is based on the FPS of our video. The pedestrian is missing for 2 seconds (25FPS*2=50)
+        self.__pedestrian_has_exit_scene_max_count = 50
         self.__id_count = 0
 
     @abstractmethod
     def tracker_update(self, new_detections_bbox):
-        '''
-        This method updates the pedestrian_list. Recieves a new list of detections and matches the new detections with
+        """
+        This method updates the pedestrian_list. Receives a new list of detections and matches the new detections with
         the previous pedestrian detected on the list, also adds new pedestrians and remove previous pedestrians.
-        :param new_detections_bbox:
+        :param new_detections_bbox, a list of Bbox with the new detections made.
         :return: The updated list of pedestrians
-        '''
+        """
         raise NotImplementedError
 
     def __get_next_id(self):
-        '''
+        """
         Get the next id for a pedestrian. Each time a new pedestrian comes to scene a new and unique id is return.
         :return: The next available and unique id
-        '''
+        """
         self.__id_count = self.__id_count + 1
         return self.__id_count
 
     def add_new_pedestrian(self, bbox):
-        '''
+        """
         Adds a new pedestrian to the pedestrian list
         :param bbox: The bbox where this new pedestrian was when detected
         :return: Empty
-        '''
+        """
         pedestrian = Pedestrian(self.__get_next_id(), bbox=bbox)
         self.pedestrian_list.append(pedestrian)
 
-    def update_pedestrian(self, id, bbox):
-        '''
+    def update_pedestrian(self, _id, bbox):
+        """
         Given an id the pedestrian with that id updates it bbox and matching parameters
-        :param id: The unique id given to the new pedestrian
+        :param _id: The unique id given to the new pedestrian
         :param bbox: The bbox where this pedestrian was last seen
         :return: True if the pedestrian was found and updated, False if there is no pedestrian in the list with that id
-        '''
-        #search pedestrian
+        """
         result = False
         for pedestrian in self.pedestrian_list:
-            if (pedestrian.id == id):
+            if pedestrian.id == _id:
                 result = True
                 pedestrian.previous_bbox = pedestrian.bbox
                 pedestrian.bbox = bbox
@@ -60,18 +61,19 @@ class BaseTracker(ABC):
 
         return result
 
-    def remove_pedestrian(self, id):
-        '''
-        Given an id the pedestrian with that id is remove from the list.
-        :param id: The unique id given to the new pedestrian
-        :return: True if the pedestrian was found and removed, False if there is no pedestrian in the list with that id.
-        '''
+    def remove_pedestrian(self, _id):
+        """
+        Given an id the pedestrian with that id is remove from the list. The pedestrian arent removed immediately, they
+        are removed once the remove_counter member equals the __pedestrian_has_exit_scene_max_count member.
+        :param _id: The unique id given to the new pedestrian
+        :return: True if the pedestrian was found, False if there is no pedestrian in the list with that id.
+        """
         result = False
         for pedestrian in self.pedestrian_list:
-            if (pedestrian.id == id):
+            if pedestrian.id == _id:
                 result = True
-                # Comprobamos cuanto tiempo lleva el pedestrian sin matchear
-                if (self.__pedestrian_has_exit_scene_max_count == pedestrian.remove_counter):
+                # Check that the pedestrian has been missing for the maximum time allowed.
+                if self.__pedestrian_has_exit_scene_max_count == pedestrian.remove_counter:
                     self.pedestrian_list.remove(pedestrian)
                 else:
                     pedestrian.remove_counter = pedestrian.remove_counter + 1
@@ -80,24 +82,24 @@ class BaseTracker(ABC):
 
 
 class CentroidTracker(BaseTracker):
-    '''
-    This is a tracker that uses centroid to match between different objects detected. Closest objetcs centroids
+    """
+    This is a tracker that uses centroid to match between different objects detected. Closest objects centroids
     are matched to the closest new centroids.
-    '''
+    """
     def __init__(self):
         super(CentroidTracker, self).__init__()
-        #TODO: get from configuration
-        self.centroid_max_distance = 50     #Distancia max a la que considerar que podemos matcher centroides
+        # Distance use as the maximum distance that centroids can be matched.
+        self.centroid_max_distance = 50
 
     def tracker_update(self, new_detections_bbox):
-        '''
-        This method updates the pedestrian_list. Recieves a new list of detections and matches the new detections with
+        """
+        This method updates the pedestrian_list. Receives a new list of detections and matches the new detections with
         the previous pedestrian detected on the list, also adds new pedestrians and remove previous pedestrians.
-        :param new_detections_bbox:
-        :return: The updated list of pedestrians
-        '''
-        #Check if the pedestrian list is empty
-        if (len(self.pedestrian_list) == 0):
+        :param new_detections_bbox, a list of Bbox with the new detections made.
+        :return: The updated list of pedestrians.
+        """
+        # Check if the pedestrian list is empty
+        if len(self.pedestrian_list) == 0:
             for detection_bbox in new_detections_bbox:
                 self.add_new_pedestrian(detection_bbox)
         else:
@@ -106,23 +108,14 @@ class CentroidTracker(BaseTracker):
         return self.pedestrian_list
 
     def __match_pedestrians(self, new_detections_list):
-        # TODO: mejorar esto, pueden darse ocasiones en las que no se matcheen algunos a pesar de haber suficientes
-        #  detecciones no es lo normal pero existe el caso. Habria que buscar o bien solucionar el problema con aquellas
-        #  asociaciones que minimizan la distancia en total. O bien ir asociando la nueva deteccion a la antifgua que
-        #  mas cerca este, pero si se da la casualidad de que hay dos deteccinoes que comparten la distancia mas cercana
-        #  a la misma deteccion, que pruebe con el siguiente mas cercano. (Habria que reordenar la matriz de alguna
-        #  forma manteniendo por clave valor las dependencias u algo.
-        '''
-        Using centroids to keep track of the detected objects, associations between previous pedestrain and new
-        detections are stablish. If new detections are made then new pedestrians are create, if previous id are
+        """
+        Using centroids to keep track of the detected objects, associations between previous pedestrians and new
+        detections are establish. If new detections are made then new pedestrians are create, if previous id are
         unmatched they are keep for a while until they are completely removed.
-        :param new_detections_list:
+        :param new_detections_list
         :return: Empty
-        '''
-        # Otra forma de hacerlo https://www.pyimagesearch.com/2018/07/23/simple-object-tracking-with-opencv/
-        # Con from scipy.spatial import distance as dist
-
-        if (len(new_detections_list) == 0):
+        """
+        if len(new_detections_list) == 0:
             for pedestrian in self.pedestrian_list:
                 self.remove_pedestrian(pedestrian.id)
             return
@@ -131,12 +124,9 @@ class CentroidTracker(BaseTracker):
         old_centroids = self.get_centroids_pedestrians(self.pedestrian_list)
 
         distance_matrix = np.array(euclidean_distances(new_centroids, old_centroids))
-        #Cada fila corresponde a la distancia de el un new_centroid, y cada columna la distancia a cada uno de los
-        # old_centroids.
 
-        # Esto devolverá el orden en que tendra que ser recorrido el array de distancia, en funcion de la distancia
-        # minima. Primero calculamos para cada fila (cada centroide nuevo) cual es la menor distancia a ese y luego
-        # calculamos el orden. Argsort dice como tendrian que ordenarse, mientras que sort te los ordena.
+        # This represents the order that the new_detections_list has to be iterate. The order is based on the minimun
+        # distance of the new_detections to the closest Pedestrian.
         rows_ordered = distance_matrix.min(axis=1).argsort()
 
         # Mark all the pedestrian as not updated, to check later if some hasnt been updated
@@ -146,24 +136,21 @@ class CentroidTracker(BaseTracker):
         # For each new detection
         for row_number in rows_ordered:
             new_bbox = new_detections_list[row_number]
-            pedestrian_index = distance_matrix[row_number].argmin() #Cogemos el indice del pedestrian que mas cercano esta
+            # The index of the closest Pedestrian
+            pedestrian_index = distance_matrix[row_number].argmin()
 
-
-            # CASO: Mayor numero de detectiones nuevas que antiguas.
             # Check that the pedestrian hasnt been updated already in this iteration.
-            if (self.pedestrian_list[pedestrian_index].updated):
+            if self.pedestrian_list[pedestrian_index].updated:
                 # Create a new pedestrian
                 self.add_new_pedestrian(bbox=new_bbox)
                 continue
 
-            # Comprobar que la distancia minima, no es mayor del threshold. En el momento que lo sea, como esta ordenado
-            # todos los demas sobrepasaran el threshold tambien.
-            if (distance_matrix[row_number].min() >= self.centroid_max_distance):
+            if distance_matrix[row_number].min() >= self.centroid_max_distance:
                 break
 
             self.update_pedestrian(self.pedestrian_list[pedestrian_index].id, bbox=new_bbox)
 
-        # CASO: se podra dar el caso de haya menos detecciones que pedestrian antiguos (alguno salio de escena)
+        # Check if there are pedestrians not updated
         pedestrian_not_updated_list = [pedestrian for pedestrian in self.pedestrian_list if not pedestrian.updated]
 
         for pedestrian_not_updated in pedestrian_not_updated_list:
@@ -175,10 +162,9 @@ class CentroidTracker(BaseTracker):
     def __get_centroid(bbox):
         """
         Given a bbox with (top_left_point, bottom_rigth_point) get the centroid of that bbox
-        :param bbox:
-        :return:
+        :param bbox: Bbox
+        :return: The centroid as a tuple representing a point x and y values.
         """
-        #TODO que poner
         x = (bbox.x0 + bbox.x1) / 2
         y = (bbox.y0 + bbox.y1) / 2
         centroid = (x, y)
@@ -201,9 +187,8 @@ class CentroidTracker(BaseTracker):
         """
         Given a list of pedestrians, returns a list of centroids for the bbox of those pedestrians.
         :param pedestrian_list:
-        :return:
+        :return: List with the centroids of each pedestrian
         """
-        #TODO que poner
         bbox_list = [pedestrian.bbox for pedestrian in pedestrian_list]
         centroids_list = self.__get_centroids_list(bbox_list)
 
