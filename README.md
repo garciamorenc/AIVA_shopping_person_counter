@@ -36,6 +36,9 @@ como impresos para que los peatones puedan ejercer sus derechos.
 
 # Prerequisitos
 
+El proyecto se ha desarrollado con la versión de python 3.6. Cualquier versión de python 3.X.X deberia funcionar.
+En caso de no contar con una instalación de python 3.X.X, por favor instale una.
+Se recomienda la creación de un entorno virtual mediante por ejemplo "virtualenv" aunque no es necesario.
 Para la correcta ejecución de la aplicación es necesario tener instalado las siguientes dependencias.
 
 ```
@@ -43,7 +46,14 @@ $ pip install numpy==1.16.1
 $ pip install scikit-learn==0.20.3
 $ pip install opencv-python==3.4.2.17
 ```
+# Instalación de AIVA_shopping_person_counter
 
+Para la descarga e instalación de este proyecto se recomienda usar la herramienta git. En una consola utilice el siguiente comando:
+
+```
+$ git clone https://github.com/garciamorenc/AIVA_shopping_person_counter
+```
+ Esto descargará el proyecto en un directorio de nombre AIVA_shopping_person_counter.
 
 
 # Test unitarios
