@@ -14,7 +14,8 @@ class Pedestrian:
 
     def validate(self, boundary):
         """
-        Tracking the pedestrian to know if he has entered the store or not
+        Check if a pedestrian is valid to take it into account as a pedestrian who has passed in front of the store
+         and has not entered
         :param boundary: shop boundary
         :return Boolean about valid pedestrian who don't go inside shop
         """
