@@ -2,6 +2,9 @@ import cv2
 
 
 class Drawer:
+    """
+    Helper class to draw Pedestrians, ROIs and all the needed information to debug de application
+    """
 
     @staticmethod
     def __draw_rectangles(image, list_rectangles, color):

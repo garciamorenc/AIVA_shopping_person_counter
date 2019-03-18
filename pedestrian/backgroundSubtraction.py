@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 
+
 class BackgroundSubtraction:
     """
     Class to apply background subtraction. Given an image or frame and using another image with the background the two
