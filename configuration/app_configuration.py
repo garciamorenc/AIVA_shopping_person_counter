@@ -5,7 +5,7 @@ from utils.bounding_box import Bbox
 class AppConfiguration:
 
     def __init__(self, bbox=None, background=None):
-        self.path = './config.xml'
+        self.__path = './config.xml'
         self.shop_bbox = None
         self.background = None
 
@@ -29,14 +29,14 @@ class AppConfiguration:
         ET.SubElement(doc, "background", name="background").text = str(self.background)
 
         tree = ET.ElementTree(root)
-        tree.write(self.path)
+        tree.write(self.__path)
         return True
 
     def load(self):
         """
-        Load the configuration from file self.path
+        Load the configuration from file self.__path
         """
-        tree = ET.parse(self.path)
+        tree = ET.parse(self.__path)
         root = tree.getroot()
 
         x0 = root[0][0].text.strip()

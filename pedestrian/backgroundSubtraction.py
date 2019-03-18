@@ -4,11 +4,10 @@ import cv2
 
 class BackgroundSubtraction:
 
-    def __init__(self, background, __threshold):
+    def __init__(self, background, threshold):
         self.__backgroundImage = background
-        self.__threshold = __threshold
+        self.__threshold = threshold
         self.__background_images_count = 0
-        self.__ringbuffer_backgrounds = None
 
     def static_subtraction(self, frame):
         """

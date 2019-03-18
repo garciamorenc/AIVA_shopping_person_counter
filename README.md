@@ -39,10 +39,9 @@ como impresos para que los peatones puedan ejercer sus derechos.
 Para la correcta ejecución de la aplicación es necesario tener instalado las siguientes dependencias.
 
 ```
-$ pip install numpy
-$ pip install scikit-learn
-$ pip install opencv-python
-$ pip install opencv-opencv-contrib-python
+$ pip install numpy==1.16.1
+$ pip install scikit-learn==0.20.3
+$ pip install opencv-python==3.4.2.17
 ```
 
 
