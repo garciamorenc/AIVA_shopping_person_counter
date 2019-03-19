@@ -87,9 +87,9 @@ Si la ejecución ha sido correcta nos mostrará el restultado por pantalla:
 ``Total of people who did not enter the store: 3``
 
 
-## Interfaz web
+## Docker
 
-En futuras implementaciones ser permitirá la ejecución y configuración de la aplicación mediante un entorno web.
+En futuras implementaciones ser permitirá la ejecución y configuración de la aplicación mediante un contenerdor docker.
 
 En construcción ...
 
