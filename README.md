@@ -36,7 +36,7 @@ como impresos para que los peatones puedan ejercer sus derechos.
 
 # Prerequisitos
 
-El proyecto se ha desarrollado con la versión de python 3.6. Cualquier versión de python 3.X.X deberia funcionar.
+El proyecto se ha desarrollado con la versión de **python 3.6**. Cualquier versión de python 3.X.X deberia funcionar.
 En caso de no contar con una instalación de python 3.X.X, por favor instale una.
 Se recomienda la creación de un entorno virtual mediante por ejemplo "virtualenv" aunque no es necesario.
 Para la correcta ejecución de la aplicación es necesario tener instalado las siguientes dependencias.
