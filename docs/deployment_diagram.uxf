@@ -1,0 +1,18 @@
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLDeployment</id><coordinates><x>30</x><y>120</y><w>490</w><h>530</h></coordinates><panel_attributes>&lt;&lt;ClientWorkspace&gt;&gt;
+PC</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>50</x><y>180</y><w>430</w><h>340</h></coordinates><panel_attributes>&lt;&lt;Docker&gt;&gt;
+Name</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>80</x><y>550</y><w>130</w><h>80</h></coordinates><panel_attributes>symbol=artifact
+&lt;&lt;Directory&gt;&gt;
+Videos</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>300</x><y>550</y><w>120</w><h>80</h></coordinates><panel_attributes>symbol=artifact
+&lt;&lt;Directory&gt;&gt;
+Configuration</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>160</x><y>330</y><w>200</w><h>60</h></coordinates><panel_attributes>&lt;&lt;Programming Language&gt;&gt;
+Python 3.7</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>160</x><y>240</y><w>200</w><h>60</h></coordinates><panel_attributes>&lt;&lt;ENTRYPOINT Script&gt;&gt;
+script_name</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>70</x><y>430</y><w>170</w><h>60</h></coordinates><panel_attributes>symbol=artifact
+&lt;&lt;executable&gt;&gt;
+pedestrian_counter</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>280</x><y>430</y><w>170</w><h>60</h></coordinates><panel_attributes>symbol=artifact
+&lt;&lt;executable&gt;&gt;
+initialize_configuration.py</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>250</x><y>290</y><w>80</w><h>60</h></coordinates><panel_attributes>lt=&lt;..
+executes</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>380</y><w>120</w><h>70</h></coordinates><panel_attributes>lt=&lt;..
+executes</panel_attributes><additional_attributes>10;50;10;30;100;30;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>270</x><y>380</y><w>120</w><h>70</h></coordinates><panel_attributes>lt=&lt;..
+executes</panel_attributes><additional_attributes>100;50;100;30;10;30;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>140</x><y>510</y><w>70</w><h>60</h></coordinates><panel_attributes>lt=&lt;..
+volume</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>360</x><y>510</y><w>70</w><h>60</h></coordinates><panel_attributes>lt=&lt;..
+volume</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element></diagram>
