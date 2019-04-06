@@ -64,7 +64,7 @@ Se proporciona una colección de test unitarios en el directory **unit_test**. S
 
 # Ejecución
 
-Podemos ejecutar la aplicación mediante la linea de commando o una interfaz gráfica. En ambas opciones deberemos seguir los siguientes pasos:
+Podemos ejecutar la aplicación mediante la linea de commando para ello deberemos seguir los siguientes pasos:
 
 * Configurar el sistema.
 * Realizar el conteo de personas.
@@ -72,7 +72,7 @@ Podemos ejecutar la aplicación mediante la linea de commando o una interfaz gr�
 ## Linea de comandos
 
 ### Configuración
-En primer lugar es necesario parametrizar la configuración que utilizaremos indicando las coordenadas de la entrada del comercio (x0, y0, x1, y1) y una imagen de nuestro comercion sin ninguna oclusión. Se recomienda el uso de los datos indicados en la siguiente instrucción.
+En primer lugar es necesario parametrizar la configuración que utilizaremos indicando las coordenadas de la entrada del comercio (x0, y0, x1, y1) y una imagen de nuestro comercio sin ninguna oclusión. Se recomienda el uso de los datos indicados en la siguiente instrucción.
 
 ``$ python initialize_configuration.py -c 214 135 360 200 -b resources/background.png``
 
@@ -88,10 +88,41 @@ Si la ejecución ha sido correcta nos mostrará el restultado por pantalla:
 
 
 ## Docker
+Se ha creado un contenedor Docker que proporciona un entorno de ejecución completo para su uso deberemos seguir los siguientes pasos.
 
-En futuras implementaciones ser permitirá la ejecución y configuración de la aplicación mediante un contenerdor docker.
+### Obtención del contendor
+La imagen se encuentra alojada en docker hub, para su obtención debemos usar el siguiente commando:
+``$ docker pull garciamorenc/aiva_shopping_person_counter``
 
-En construcción ...
+### Ejecución
+Una vez tengamos la imagen podremos ejecutar la aplicación en modo configuración o en modo análisis de videos.
+
+Para que nuestro contenedor tenga acceso a ficheros del exterior propios de la configuración o los videos a analizar deberemos trabajar mediante volúmenes. Deberemos crear las siguientes rutas de ficheros:
+
+- /mydata/configuration
+- /mydata/videos
+
+Por ejemplo, podemos crear esta estructura de carpetas en el $HOME path. En la ruta **configuration** incluiremos una imagen de nuestro comercio sin oclusiones como la que se proporiona en la ruta de este repositorio **/AIVA_shopping_person_counter/resources/background.png**. Por otro lado en la ruta **videos** incluiremos los videos que deseemos analizar, en este caso podemos utilizar el video proporcionado en este repositorio **AIVA_shopping_person_counter/dataset_2/ThreePastShop1front.mpg**. De modo que tendremos la siguiente estructura en nuestro $HOME path.
+
+![configuration_example](https://i.imgur.com/q5ve1Yb.png)
+
+#### Configuración
+En primer lugar es necesario parametrizar la configuración que utilizaremos indicando las coordenadas de la entrada del comercio (x0, y0, x1, y1) y una imagen de nuestro comercio sin ninguna oclusión. 
+
+Apoyandonos en la estructura de carpeta que hemos realizado podeoms aplicar la configuración desada mediante el siguiente comando.
+
+``$ sudo docker run -v /home/docker_data/configuration/:/config aiva_shopping_person_counter -a configuration -x 214 -y 135 -w 360 -h 200 -b config/background.png ``
+
+Si hemos realizado este paso correctamente recibiremos un mensaje indicando la correcta ejecución:
+
+``$ Configuration saved to config.xml``
+
+### Análisis de video
+Nuevamente nos apoyaremos en la estructura de carpetas creada previamente de modo que podremos realizar el análisis de los videos que queramos através de la siguiente instrucción.
+
+``$ sudo docker run -v /home/docker_data/videos/:/videos aiva_shopping_person_counter -a video``
+
+La ejecución nos indicará el video que se esta analizando en cada momento y al terminar podremos acceder a la ruta **/home/docker_data/videos** donde encontraremos ficheros de texto con el nombre del video al que corresponden indicandonos el número de personas que han pasado por delante de la tienda y no han llegado a entrar.
 
 # Autores
 
