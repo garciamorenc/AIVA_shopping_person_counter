@@ -7,12 +7,15 @@ from pedestrian.pedestrian_tracker import CentroidTracker
 from utils.drawer import Drawer
 from argparse import ArgumentParser
 
-
 class PedestrianCounter:
     """
     This is the main class of the project. Is used to get a count of the pedestrians that passes in front of the store
     without entering the store.
     """
+
+    # "Set" that stores the id of the pedestrian who did not entered the store so its count only once
+    pedestrian_not_entered_list_by_id = {-1}
+
     def count(self, video, debug):
         """
         It recognizes the total of people who pass in front of the store and do not get to enter
@@ -39,6 +42,8 @@ class PedestrianCounter:
                     green_color = (0, 255, 0)
                     Drawer.draw_pedestrians(frame, pedestrian_list, green_color)
                     Drawer.draw_shop_boundary(frame, conf.shop_bbox)
+                    cv2.putText(frame, str(total_pedestrians), (10, 40), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 255), 1, cv2.LINE_AA)
+
                     cv2.imshow("Test", frame)
                     if cv2.waitKey(1) & 0xFF == ord('q'):
                         break
@@ -49,8 +54,8 @@ class PedestrianCounter:
         cv2.destroyAllWindows()
         return total_pedestrians
 
-    @staticmethod
-    def __get_valid(pedestrian_list, boundary):
+
+    def __get_valid(self, pedestrian_list, boundary):
         """
         Count the valid pedestrian from a tracking list
         :param pedestrian_list: pedestrian list that are tracked
@@ -59,10 +64,21 @@ class PedestrianCounter:
         """
         valid = 0
         for pedestrian in pedestrian_list:
+
+            #Check that this pedestrian is not on the "pedestrian_not_entered_list_by_id"
+            isCounted = False
+            for _id in self.pedestrian_not_entered_list_by_id:
+                if (pedestrian.id == _id):
+                    isCounted = True
+
+            if (isCounted):
+                continue
+
             result = pedestrian.validate(boundary)
 
             if result:
                 valid += 1
+                self.pedestrian_not_entered_list_by_id.add(pedestrian.id)
 
         return valid
 
@@ -86,3 +102,4 @@ if __name__ == "__main__":
     counter = PedestrianCounter()
     total = counter.count(video_path, args.test)
     print('Total of people who did not enter the store: ' + str(total))
+    exit(total)
