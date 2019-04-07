@@ -91,8 +91,9 @@ Si la ejecución ha sido correcta nos mostrará el restultado por pantalla:
 Se ha creado un contenedor Docker que proporciona un entorno de ejecución completo para su uso deberemos seguir los siguientes pasos.
 
 ### Obtención del contendor
-La imagen se encuentra alojada en docker hub, para su obtención debemos usar el siguiente commando:
-``$ docker pull garciamorenc/aiva_shopping_person_counter``
+La imagen se encuentra alojada en docker hub, para su obtención debemos usar el siguiente commando.
+
+``$ sudo docker pull garciamorenc/aiva_shopping_person_counter``
 
 ### Ejecución
 Una vez tengamos la imagen podremos ejecutar la aplicación en modo configuración o en modo análisis de videos.
