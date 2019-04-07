@@ -115,10 +115,8 @@ Finalmente utilizaremos la siguiente instrucción para ejecutar el contenedor.
 
 En el caso de que hayamos decidido aplicar una configuración distinta a la que se entrega por defecto al cliente podremos observa por pantalla el siguiente mensaje indicando su correcta aplicación.
 
-``
-    $ File configuration applied
-    $ Background configuration applied
-``
+``$ File configuration applied``
+``$ Background configuration applied``
 
 Respecto al análisis de los vídeos el contenedor informará del video que se esta analizando en cada momento y del ficho en el cual se guardará el resultado de cada uno.
 
