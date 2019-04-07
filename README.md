@@ -90,7 +90,7 @@ Si la ejecución ha sido correcta nos mostrará el restultado por pantalla:
 ## Docker
 Se ha creado un contenedor Docker que proporciona un entorno de ejecución completo para su uso deberemos seguir los siguientes pasos.
 
-### Obtención del contendor
+### Obtención del contenedor
 La imagen se encuentra alojada en docker hub, para su obtención debemos usar el siguiente commando.
 
 ``$ sudo docker pull garciamorenc/aiva_shopping_person_counter``
@@ -98,14 +98,14 @@ La imagen se encuentra alojada en docker hub, para su obtención debemos usar el
 ### Ejecución
 La imagen de docker proporcionada contiene la configuración necesaria para el correcto funcionamiento en la tienda del cliente.
 
-Para poder ejecutar nuestro contenedor es necesario que tenga acceso a los videos que queramos analizar o la configuración que vayamos a emplear, por lo que deberemos trabajar mediante volúmenes. Deberemos crear la siguiente estructura de carpetas-
+Para poder ejecutar nuestro contenedor es necesario que tenga acceso a los vídeos que queramos analizar o la configuración que vayamos a emplear, por lo que deberemos trabajar mediante volúmenes. Deberemos crear la siguiente estructura de carpetas-
 
 - docker_data
     - config **(no es necesaria si deseamos usar la configuración por defecto)*
     - videos
 
-Dentro de **config** incluiremos el fichero XML con la configuración de nuestra aplicación y una imagén de nuestra tienda sin oclusiones. Podemos utilizar los ficheros proporcionados en este repositorio como **AIVA_shopping_person_counter/config.xml** para la configuración de la aplicación y **AIVA_shopping_person_counter/resources/
-background.png** como imagen de fondo. Por otro lado en la ruta **videos** incluiremos aquellos videos que deseamos analizar, en este caso podemos utilizar el video que se proporciona en este repositorio **AIVA_shopping_person_counter/dataset_2/ThreePastShop1front.mpg**. En la siguiente imagen se muestra gráfica mente como quedaría distribuida nuestra estructura de carpetas, en caso de que decidieramos crearla en nuestro $HOME.
+Dentro de **config** incluiremos el fichero XML con la configuración de nuestra aplicación y una imagen de nuestra tienda sin oclusiones. Podemos utilizar los ficheros proporcionados en este repositorio como **AIVA_shopping_person_counter/config.xml** para la configuración de la aplicación y **AIVA_shopping_person_counter/resources/
+background.png** como imagen de fondo. Por otro lado en la ruta **videos** incluiremos aquellos videos que deseamos analizar, en este caso podemos utilizar el video que se proporciona en este repositorio **AIVA_shopping_person_counter/dataset_2/ThreePastShop1front.mpg**. En la siguiente imagen se muestra gráficamente cómo quedaría distribuida nuestra estructura de carpetas, en caso de que la hubiéramos creado en nuestro $HOME.
 
 ![docker_example](https://i.imgur.com/z3Jy2Rh.png)
 
@@ -113,24 +113,23 @@ Finalmente utilizaremos la siguiente instrucción para ejecutar el contenedor.
 
 ``$ sudo docker run -v /home/garciamorenc/docker_data/:/data garciamorenc/aiva_shopping_person_counter``
 
-En el caso de que hayamos decidido aplicar una configuración distinta a la que se entrega por defecto al cliente podremos observa por pantalla el siguiente mensaje indicando su correcta aplicación.
+En el caso de que hayamos decidido aplicar una configuración distinta a la que se entrega por defecto al cliente podremos observar por pantalla el siguiente mensaje indicando su correcta aplicación.
 
 ```
 $ File configuration applied
 $ Background configuration applied
 ```
 
-Respecto al análisis de los vídeos el contenedor informará del video que se esta analizando en cada momento y del ficho en el cual se guardará el resultado de cada uno.
+Respecto al análisis de los vídeos el contenedor informará del video que se está analizando en cada momento y del fichero en el cual se guardará el resultado de cada uno.
 
 ```
 $ ***********************************
 $ Analyzing video ./data/videos/ThreePastShop1front.mpg
 $ result saved at ./data/videos/ThreePastShop1front.mpg.txt
 $ ***********************************
-$ 
 ```
 
-Una vez ha finalizado la ejecución del contendor podremos observar en nuestro volumen compartido **docker_data/videos** los resultados de todos los videos analizados guardados en ficheros txt.
+Una vez ha finalizado la ejecución del contendor podremos observar en nuestro volumen compartido **docker_data/videos** los resultados de todos los vídeos analizados guardados en ficheros txt.
 
 ![result_example](https://i.imgur.com/0W8t5Eo.png)
 
