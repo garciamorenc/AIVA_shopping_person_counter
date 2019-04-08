@@ -1,8 +1,8 @@
-<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLDeployment</id><coordinates><x>70</x><y>210</y><w>490</w><h>530</h></coordinates><panel_attributes>&lt;&lt;ClientWorkspace&gt;&gt;
+<diagram program="umletino" version="14.3.0"><zoom_level>10</zoom_level><element><id>UMLDeployment</id><coordinates><x>70</x><y>210</y><w>490</w><h>660</h></coordinates><panel_attributes>&lt;&lt;ClientWorkspace&gt;&gt;
 PC</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>90</x><y>270</y><w>430</w><h>340</h></coordinates><panel_attributes>&lt;&lt;Docker&gt;&gt;
-AIVA_shopping_person_counter</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>120</x><y>640</y><w>130</w><h>80</h></coordinates><panel_attributes>symbol=artifact
+AIVA_shopping_person_counter</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>230</x><y>640</y><w>130</w><h>80</h></coordinates><panel_attributes>symbol=artifact
 &lt;&lt;Directory&gt;&gt;
-Videos</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>340</x><y>640</y><w>120</w><h>80</h></coordinates><panel_attributes>symbol=artifact
+Docker_data</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>140</x><y>760</y><w>120</w><h>80</h></coordinates><panel_attributes>symbol=artifact
 &lt;&lt;Directory&gt;&gt;
 Configuration</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>200</x><y>420</y><w>200</w><h>60</h></coordinates><panel_attributes>&lt;&lt;Programming Language&gt;&gt;
 Python 3.7</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>200</x><y>330</y><w>200</w><h>60</h></coordinates><panel_attributes>&lt;&lt;ENTRYPOINT Script&gt;&gt;
@@ -13,8 +13,9 @@ pedestrian_counter.py</panel_attributes><additional_attributes></additional_attr
 initialize_configuration.py</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>380</y><w>90</w><h>60</h></coordinates><panel_attributes>lt=&lt;..
    executes</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>470</y><w>120</w><h>70</h></coordinates><panel_attributes>lt=&lt;..
 executes</panel_attributes><additional_attributes>10;50;10;30;100;30;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>310</x><y>470</y><w>120</w><h>70</h></coordinates><panel_attributes>lt=&lt;..
-executes</panel_attributes><additional_attributes>100;50;100;30;10;30;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>180</x><y>600</y><w>70</w><h>60</h></coordinates><panel_attributes>lt=&lt;..
-  volume</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>400</x><y>600</y><w>70</w><h>60</h></coordinates><panel_attributes>lt=&lt;..
+executes</panel_attributes><additional_attributes>100;50;100;30;10;30;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>600</y><w>80</w><h>60</h></coordinates><panel_attributes>lt=&lt;..
   volume</panel_attributes><additional_attributes>10;40;10;10</additional_attributes></element><element><id>UMLDeployment</id><coordinates><x>230</x><y>70</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;Internet&gt;&gt;
-Docker Hub</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>160</y><w>170</w><h>70</h></coordinates><panel_attributes>lt=&lt;..
-   download docker image</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element></diagram>
+Docker Hub</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>160</y><w>180</w><h>70</h></coordinates><panel_attributes>lt=&lt;..
+   download docker image</panel_attributes><additional_attributes>10;50;10;10</additional_attributes></element><element><id>UMLGeneric</id><coordinates><x>340</x><y>760</y><w>120</w><h>80</h></coordinates><panel_attributes>symbol=artifact
+&lt;&lt;Directory&gt;&gt;
+Videos</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>710</y><w>130</w><h>70</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>110;50;110;30;10;30;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>190</x><y>710</y><w>130</w><h>70</h></coordinates><panel_attributes>lt=&lt;..</panel_attributes><additional_attributes>10;50;10;30;110;30;110;10</additional_attributes></element></diagram>
