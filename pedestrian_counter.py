@@ -7,6 +7,7 @@ from pedestrian.pedestrian_tracker import CentroidTracker
 from utils.drawer import Drawer
 from argparse import ArgumentParser
 
+
 class PedestrianCounter:
     """
     This is the main class of the project. Is used to get a count of the pedestrians that passes in front of the store
@@ -54,7 +55,6 @@ class PedestrianCounter:
         cv2.destroyAllWindows()
         return total_pedestrians
 
-
     def __get_valid(self, pedestrian_list, boundary):
         """
         Count the valid pedestrian from a tracking list
@@ -66,12 +66,12 @@ class PedestrianCounter:
         for pedestrian in pedestrian_list:
 
             #Check that this pedestrian is not on the "pedestrian_not_entered_list_by_id"
-            isCounted = False
+            is_counted = False
             for _id in self.pedestrian_not_entered_list_by_id:
-                if (pedestrian.id == _id):
-                    isCounted = True
+                if pedestrian.id == _id:
+                    is_counted = True
 
-            if (isCounted):
+            if is_counted:
                 continue
 
             result = pedestrian.validate(boundary)

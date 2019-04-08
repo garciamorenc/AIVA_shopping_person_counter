@@ -10,7 +10,7 @@ class Pedestrian:
         self.previous_bbox = None
         self.updated = True
         self.remove_counter = 0
-        self.hasEnter = False  # Enter to shop
+        self.has_enter = False  # Enter to shop
 
     def validate(self, boundary):
         """
@@ -20,12 +20,12 @@ class Pedestrian:
         :return Boolean about valid pedestrian who don't go inside shop
         """
         result = False
-        if self.previous_bbox and not self.hasEnter:
+        if self.previous_bbox and not self.has_enter:
             previous_point = int((self.previous_bbox.x0 + self.previous_bbox.x1) / 2)
             point = int((self.bbox.x0 + self.bbox.x1) / 2)
 
             self.__check_shop_boundary(boundary, previous_point)
-            if not self.hasEnter:
+            if not self.has_enter:
                 result = self.__check_valid_boundary(boundary, previous_point, point)
 
         return result
@@ -50,6 +50,6 @@ class Pedestrian:
         :param boundary: shop boundary
         :param actual_point: actual point to check valid position
         """
-        self.hasEnter = (boundary.x0 <= actual_point <= boundary.x1) and (boundary.y0 >= self.bbox.y1)
+        self.has_enter = (boundary.x0 <= actual_point <= boundary.x1) and (boundary.y0 >= self.bbox.y1)
 
 

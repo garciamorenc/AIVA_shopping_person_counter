@@ -15,7 +15,7 @@ class TestPedestrian(unittest.TestCase):
 
         self.assertIsInstance(p.bbox, Bbox)
 
-        self.assertFalse(p.hasEnter)
+        self.assertFalse(p.has_enter)
         self.assertTrue(result)
 
     def test_validate_fail(self):
@@ -28,7 +28,7 @@ class TestPedestrian(unittest.TestCase):
 
         self.assertIsInstance(p.bbox, Bbox)
 
-        self.assertFalse(p.hasEnter)
+        self.assertFalse(p.has_enter)
         self.assertFalse(result)
 
     def test_validate_enter(self):
@@ -41,7 +41,7 @@ class TestPedestrian(unittest.TestCase):
 
         self.assertIsInstance(p.bbox, Bbox)
 
-        self.assertTrue(p.hasEnter)
+        self.assertTrue(p.has_enter)
         self.assertFalse(result)
 
 

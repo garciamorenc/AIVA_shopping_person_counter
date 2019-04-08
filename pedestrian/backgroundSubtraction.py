@@ -8,7 +8,7 @@ class BackgroundSubtraction:
     images are subtract to obtain the foreground of the image.
     """
     def __init__(self, background, threshold):
-        self.__backgroundImage = background
+        self.__background_image = background
         self.__threshold = threshold
         self.__background_images_count = 0
 
@@ -20,8 +20,8 @@ class BackgroundSubtraction:
         false values background.
         """
         frame = frame.astype(np.int16)
-        self.__backgroundImage = self.__backgroundImage.astype(np.int16)
-        subtraction = np.abs(np.subtract(frame, self.__backgroundImage))
+        self.__background_image = self.__background_image.astype(np.int16)
+        subtraction = np.abs(np.subtract(frame, self.__background_image))
         subtraction_mask = (subtraction[:, :, 0] > self.__threshold) | (subtraction[:, :, 1] > self.__threshold) | \
                            (subtraction[:, :, 2] > self.__threshold)
         subtraction_mask = np.multiply(1, subtraction_mask).astype(float)
@@ -40,6 +40,6 @@ class BackgroundSubtraction:
         """
         subtraction_mask = self.static_subtraction(frame)
         # Update the background using the moving average
-        accu_weight = cv2.accumulateWeighted(frame, self.__backgroundImage.astype(float), alpha)
-        self.__backgroundImage = cv2.convertScaleAbs(accu_weight)  # Use this to convert to uint8
+        accu_weight = cv2.accumulateWeighted(frame, self.__background_image.astype(float), alpha)
+        self.__background_image = cv2.convertScaleAbs(accu_weight)  # Use this to convert to uint8
         return subtraction_mask
